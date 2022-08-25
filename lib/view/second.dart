@@ -3,7 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:homework/controller/api_contoller.dart';
 import 'package:homework/service/get_api.dart';
+import 'package:homework/utils/app_constants.dart';
 import 'package:homework/view/forth.dart';
+import 'package:homework/view/widgets/banner_widget.dart';
 import 'package:pinput/pinput.dart';
 import 'package:homework/view/third.dart';
 
@@ -36,6 +38,39 @@ class _SecondPageState extends State<SecondPage> {
 
   bool isFirstLod = true;
 
+  // Future<void> _showMyDialog(context, data) async {
+  //   return showDialog<void>(
+  //     context: context,
+  //     barrierDismissible: false, // user must tap button!
+  //     builder: (BuildContext context) {
+  //       return AlertDialog(
+  //         title: const Text('Alert'),
+  //         content: SingleChildScrollView(
+  //           child: ListBody(
+  //             children:const  <Widget>[
+  //               Text("Enter Employee no or Pin code"),
+  //             ],
+  //           ),
+  //         ),
+  //         actions: <Widget>[
+  //           // TextButton(
+  //           //   child: const Text('Cancel'),
+  //           //   onPressed: () {
+  //           //     Navigator.of(context).pop();
+  //           //   },
+  //           // ),
+  //           TextButton(
+  //             child: const Text('Okay'),
+  //             onPressed: () {
+  //               Navigator.of(context).pop();
+  //             },
+  //           ),
+  //         ],
+  //       );
+  //     },
+  //   );
+  // }
+
   // final defaultPinTheme = PinTheme(
   //   width: 56,
   //   height: 56,
@@ -61,21 +96,7 @@ class _SecondPageState extends State<SecondPage> {
     return Scaffold(
       body: Column(
         children: [
-          Container(
-            height: 250,
-            width: 500,
-            decoration: const BoxDecoration(
-              color: Colors.amber,
-              borderRadius: BorderRadius.only(
-                // bottomLeft: Radius.circular(20),
-                bottomRight: Radius.circular(30),
-              ),
-            ),
-            child: Image.asset(
-              'assets/images/logo.jpg',
-              width: 20,
-            ),
-          ),
+          const BannerLogo(),
           Container(
             // top: 0,
             margin: const EdgeInsets.only(top: 30),
@@ -99,9 +120,9 @@ class _SecondPageState extends State<SecondPage> {
             // defaultPinTheme: defaultPinTheme,
             // focusedPinTheme: focusedPinTheme,
             // submittedPinTheme: submittedPinTheme,
-            validator: (s) {
-              return s == '2222' ? null : 'Pin is incorrect';
-            },
+            // validator: (s) {
+            //   return s == '2222' ? null : 'Pin is incorrect';
+            // },
             pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
             showCursor: true,
             onCompleted: (pin) => print(pin),
@@ -133,28 +154,39 @@ class _SecondPageState extends State<SecondPage> {
               if (employee_no.text != '' &&
                   pin_no.text != '' &&
                   pin_no.text.length == 4) {
-                ControllerClass().postApiFunc(context , employee_no.text, pin_no.text);
+                ControllerClass()
+                    .postApiFunc(context, employee_no.text, pin_no.text);
               }
-              if (employee_no.text == fakeuser && pin_no.text != "") {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const Third(),
-                  ),
-                );
-              } else if (employee_no.text == validuser && pin_no.text != "") {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const Fourth(),
-                  ),
-                );
-              }
-              // else {
-              //   setState(() {});
+              // if (employee_no.text == fakeuser && pin_no.text != "") {
+              //   Navigator.push(
+              //     context,
+              //     MaterialPageRoute(
+              //       builder: (context) => const Third(),
+              //     ),
+              //   );
+              // } else if (employee_no.text == validuser && pin_no.text != "") {
+              //   Navigator.push(
+              //     context,
+              //     MaterialPageRoute(
+              //       builder: (context) => const Fourth(),
+              //     ),
+              //   );
               // }
+              // // else {
+              // //   setState(() {});
+              // // }
               else {
-                setState(() {});
+                AppConstants().showMyDialog(
+                  context,
+                  'Alert',
+                  "Enter Employee no or Pin code",
+                  'Okay',
+                  () {
+                    Navigator.of(context).pop();
+                  },
+                );
+                // _showMyDialog(context, data);
+                // setState(() {});
               }
             },
             child: const Text(
@@ -165,16 +197,16 @@ class _SecondPageState extends State<SecondPage> {
           const SizedBox(
             height: 10,
           ),
-          isFirstLod
-              ? const Text("")
-              : employee_no.text == ""
-                  ? const Text("Please Enter Employee number")
-                  : const Text(""),
-          isFirstLod
-              ? const Text("")
-              : pin_no.text == ""
-                  ? const Text("Please Enter Pin number")
-                  : const Text(""),
+          // isFirstLod
+          //     ? const Text("")
+          //     : employee_no.text == ""
+          //         ? const Text("Please Enter Employee number")
+          //         : const Text(""),
+          // isFirstLod
+          //     ? const Text("")
+          //     : pin_no.text == ""
+          //         ? const Text("Please Enter Pin number")
+          //         : const Text(""),
         ],
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:homework/view/widgets/banner_widget.dart';
 class Third extends StatefulWidget {
   const Third({Key? key}) : super(key: key);
 
@@ -9,9 +10,15 @@ class Third extends StatefulWidget {
 class _ThirdState extends State<Third> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return  Scaffold(
       body: Center(
-        child: Text("FAKE USER"),
+        child: Column(
+          children: [
+            
+           const BannerLogo(),
+            Text("FAKE USER"),
+          ],
+        ),
       ),
     );
     

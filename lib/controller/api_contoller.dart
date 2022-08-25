@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:homework/service/get_api.dart';
+import 'package:homework/utils/app_constants.dart';
 import 'package:homework/view/forth.dart';
 import 'package:homework/view/third.dart';
 
@@ -14,40 +15,15 @@ class ControllerClass {
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => const Third()));
     } else {
-      _showMyDialog(context, data);
+      AppConstants().showMyDialog(
+        context,
+        'Alert',
+        data['Message'],
+        'Okay',
+        () {
+          Navigator.of(context).pop();
+        },
+      );
     }
-  }
-
-  Future<void> _showMyDialog(context, data) async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Alert'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text(data['Message']),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('Cancel'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            TextButton(
-              child: const Text('Approve'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
   }
 }
